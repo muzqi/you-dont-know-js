@@ -192,4 +192,87 @@ foo.call(obj, 1, 2) // 6
 
 #### 硬绑定
 
+使用**显示绑定**时, 我们重复进行绑定, 仍然会让之前的绑定值丢失:
+
+``` javascript
+var obj = { name: 'muzi' }
+
+function foo() {
+    console.log(this.name)
+}
+
+foo.call(obj)  // muzi
+
+setTimeout(() => (
+    foo.call({ name: 'yaya' } // yaya
+)), 100)
+```
+
+如果我们想避免这种情况, 就需要使用 **硬绑定**;
+
+硬绑定的典型应用场景就是创建一个**包裹函数**, 传入所有的参数并返回接收到的所有值:
+
+``` javascript
+var obj = {
+    name: 'muzi'
+}
+
+function foo() {
+    console.log(this.name)
+}
+
+function wrapper() {
+    foo.call(obj)
+}
+
+wrapper()  // muzi
+wrapper.call({ name: 'yaya' })  // muzi
+```
+
+虽然 `wrapper` 绑定了一个新的对象, 但当 `wrapper` 每次被调用时,
+`foo` 都会显示绑定 `obj` 对象;
+
+所以无论 `wrapper` 如何调用, `foo` 函数的绑定值都不会被改变.
+
+> 我们可以根据这个特性, 创建一个**辅助绑定函数**:
+
+``` javascript
+function bind(fn, obj) {
+  return function() {
+    return fn.apply(obj, arguments)
+  }
+}
+```
+
+``` javascript
+function foo(b, c) {
+    return this.a + b + c
+}
+
+var bar = bind(foo, { a: 1 })
+
+bar(2, 3) // 6
+bar.call({ a: 10 }, 2, 3) // 6
+```
+
+> 事实上, 早在 `ES5` 就提供了原生的**硬绑定**方法: `Function.prototype.bind`
+
+``` javascript
+var bar = foo.bind({ a: 1 })
+
+bar(2, 3)  // 6
+bar.call({ a: 10 }, 2, 3)  // 6
+```
+
+> `Function.prototype.bind` 的实现:
+
+``` javascript
+Function.prototype._bind = function(obj) {
+  var self = this
+  return function() {
+    return self.apply(obj, arguments)
+  }
+}
+```
+
 ### new 绑定
