@@ -1,1 +1,5 @@
-# you-don-t-know-javascript
+# 你不知道的 JavaScript 读书笔记
+
+## 上卷
+
+[第一章 作用域和闭包]()
