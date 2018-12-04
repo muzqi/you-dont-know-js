@@ -11,6 +11,12 @@
     - [显式绑定](#显式绑定)
       - [硬绑定](#硬绑定)
     - [new 绑定](#new-绑定)
+      - [普通函数](#普通函数)
+      - [构造函数](#构造函数)
+    - [优先级](#优先级)
+  - [ES6 箭头函数](#es6-箭头函数)
+    - [代码片段1:](#代码片段1)
+    - [代码片段2:](#代码片段2)
 
 <!-- /TOC -->
 
@@ -215,7 +221,7 @@ setTimeout(() => (
 ``` javascript
 var obj = {
     name: 'muzi'
-}
+}v
 
 function foo() {
     console.log(this.name)
@@ -276,3 +282,103 @@ Function.prototype._bind = function(obj) {
 ```
 
 ### new 绑定
+
+> 构造函数只是一些使用 `new` 操作符时被调用的函数, 它们并不会属于某个类, 也不会实例化一个类, 它们只是被 `new` 操作符调用的普通函数而已
+
+#### 普通函数
+
+以下示例, `Person` 是一个所谓的构造函数, 根据**词法作用域**的规则, `Person` 被调用时, 内部的 `this` 应当指向**全局作用域**;
+
+因此, 当我们访问 `person.name` 时, 会得到 `TypeError` 的结果, 因为 `Person()` 没有返回任何东西, 是个 `undefined`
+
+``` javascript
+function Person() {
+  this.name = 'muzi'
+}
+
+const person = Person()
+
+console.log(window.name) // muzi
+console.log(person.name) // TypeError
+```
+
+可以看到, 没有被 `new` 操作符调用的所谓构造函数, 仅仅是普通函数而已
+
+#### 构造函数
+
+``` javascript
+const person = new Person()
+
+console.log(window.name)  // undefined
+console.log(person.name)  // muzi
+```
+
+我们会得到截然不同的结果, 这是因为 `new` 操作符做了以下四件事情:
+
+- 创建或构造了一个全新的对象
+- 这个新对象会被执行[[原型]]连接
+- 函数中的 `this` 会指向这个新对象
+- 如果被调用的函数没有返回(return), 则 `new` 表达式中的函数调用会自动返回这个新对象
+
+### 优先级
+
+`new` > `显式绑定` > `隐式绑定` > `默认绑定`
+
+## ES6 箭头函数
+
+> 箭头函数不使用 `this` 的四种标准规则, 而是根据此法作用域来决定 `this`
+
+``` javascript
+var obj = { a: 1 }
+
+// 1
+function fn() {
+    setTimeout(function() {
+        console.log(this.a)
+    }, 1000)
+}
+
+fn.call(obj)  // undefined
+
+// 2
+function arrow() {
+    setTimeout(() => {
+        console.log(this.a)
+    }, 1000)
+}
+
+arrow.call(obj) // 1
+```
+
+### 代码片段1:
+`fn` 的 `this` 指向 `obj`, `setTimeout` 的回调函数是个普通函数, 并且没有被特殊调用, 执行 `默认绑定` 规则, 其 `this` 指向全局作用域
+
+> 这种情况下, 通常有两种方法, 可以让回调函数绑定到父级的 `this`
+
+``` javascript
+var obj = { a: 1 }
+
+function fn() {
+    var self = this
+    setTimeout(function() {
+        console.log(self.a)
+    }, 1000)
+}
+
+fn.call(obj) // 1
+```
+
+``` javascript
+var obj = { a: 1 }
+
+function fn() {
+    setTimeout(function() {
+        console.log(this.a)
+    }.bind(this), 1000)
+}
+
+fn.call(obj) // 1
+```
+
+### 代码片段2:
+`arrow` 的 `this` 指向 `obj`, `setTimeout` 的回调函数是个箭头函数, 根据 **词法作用域**, 该箭头函数的 `this` 也指向 `obj`
