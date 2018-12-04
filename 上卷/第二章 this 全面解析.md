@@ -287,7 +287,7 @@ Function.prototype._bind = function(obj) {
 
 #### 普通函数
 
-以下示例, `Person` 是一个所谓的构造函数, 根据**词法作用域**的规则, `Person` 被调用时, 内部的 `this` 应当指向**全局作用域**;
+以下示例, `Person` 是一个所谓的构造函数, 根据**默认绑定**的规则, `Person` 被调用时, 内部的 `this` 应当指向**全局作用域**;
 
 因此, 当我们访问 `person.name` 时, 会得到 `TypeError` 的结果, 因为 `Person()` 没有返回任何东西, 是个 `undefined`
 
