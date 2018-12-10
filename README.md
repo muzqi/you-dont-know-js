@@ -2,7 +2,7 @@
 
 > 笔者近期计划深度阅读 《你不知道的 JavaScript》上 中 下卷, 以巩固语言基础, 故记录下读书笔记, 供自己复习也方便他人.
 
-持续更新中...
+持续更新中, 欢迎 `star` [传送门](https://github.com/muzqi/you-dont-know-js/blob/master/README.md)
 
 ## 上卷
 
