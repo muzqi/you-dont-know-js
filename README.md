@@ -12,6 +12,10 @@
 
 [第三章 对象](https://github.com/muzqi/you-dont-know-js/blob/master/%E4%B8%8A%E5%8D%B7/%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E5%AF%B9%E8%B1%A1.md)
 
+第四章 混合对象"类"
+
+[第五章 原型](https://github.com/muzqi/you-dont-know-js/blob/master/%E4%B8%8A%E5%8D%B7/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%8E%9F%E5%9E%8B.md)
+
 ## 中卷
 
 ## 下卷
