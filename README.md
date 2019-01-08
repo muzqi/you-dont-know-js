@@ -16,6 +16,10 @@
 
 [第五章 原型](https://github.com/muzqi/you-dont-know-js/blob/master/%E4%B8%8A%E5%8D%B7/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%8E%9F%E5%9E%8B.md)
 
+第六章 行为委托
+
 ## 中卷
+
+[第一章 类型](https://github.com/muzqi/you-dont-know-js/blob/master/%E4%B8%AD%E5%8D%B7/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E7%B1%BB%E5%9E%8B.md)
 
 ## 下卷
